@@ -1,3 +1,9 @@
+build/
+lib/
+*/lib
+*/data
+*/lcfiweights
+scripts/*00*
 # Prerequisites
 *.d
 

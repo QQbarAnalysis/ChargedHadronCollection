@@ -59,7 +59,7 @@ private:
 
   int _charged_bool=0;
   float _momentum_cut=1;
-  float _costheta_cut=0.95;
+  float _costheta_cut=0.98;
   std::string _newMCColName;
   std::string _MCColName;
   std::string _colName;

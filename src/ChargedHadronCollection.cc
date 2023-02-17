@@ -97,31 +97,12 @@ std::vector<MCParticle *> ChargedHadronCollection::GetQQbarStables(EVENT::LCColl
 	if (number < 3)
 		return stables; // return empty
 
-	vector<MCParticle *> stable_stables;
-	vector<MCParticle *> isr_stables;
-	vector<MCParticle *> overlay_stables;
-
-	int istable; // the border of stableization
-
-	int isrphotons[2];
-	isrphotons[0] = -1;
-	isrphotons[1] = -1;
-
-	vector<MCParticle *> pairISR;
-	for (int i = 2; i < number; i++)
-	{
-		MCParticle *particle = dynamic_cast<MCParticle *>(myCollection->getElementAt(i));
-		if (particle->getPDG() == 22 && pairISR.size() < 2 && particle->getGeneratorStatus() == 1)
-		{
-			pairISR.push_back(particle);
-			isrphotons[pairISR.size() - 1] = i;
-		}
-	}
-	for (int i = isrphotons[pairISR.size() - 1] + 1; i < number; i++)
+	for (int i = 0 i < number; i++)
 	{
 
 		MCParticle *particle = dynamic_cast<MCParticle *>(myCollection->getElementAt(i));
 		vector<MCParticle *> daughters = particle->getDaughters();
+		int status=particle->getGeneratorStatus();
 
 		streamlog_out(DEBUG) << "\n MCCollection, particle:" << i;
 		streamlog_out(DEBUG) << " pdg=" << particle->getPDG();
@@ -133,68 +114,20 @@ std::vector<MCParticle *> ChargedHadronCollection::GetQQbarStables(EVENT::LCColl
 		streamlog_out(DEBUG) << " pz=" << particle->getMomentum()[2];
 		streamlog_out(DEBUG) << " m=" << particle->getMass();
 		streamlog_out(DEBUG) << " charge=" << particle->getCharge();
-		if (daughters.size() == 0 && particle->isOverlay() == true)
+		if (status==1 && particle->isOverlay() == true)
 		{
 			overlay_stables.push_back(particle);
-			stables.push_back(particle);
+			//stables.push_back(particle);
 			streamlog_out(DEBUG) << " ----> IS OVERLAY";
 		}
 
-		if (daughters.size() == 0 && particle->isOverlay() == false)
+		if ( status==1 && particle->isOverlay() == false)
 		{
-
-			int ISRstable = 0;
-
-			vector<MCParticle *> parents = particle->getParents();
-			for (int j = 0; j < parents.size(); j++)
-			{
-				if (parents.at(j) == pairISR.at(0) || parents.at(j) == pairISR.at(1))
-				{
-					ISRstable = 1;
-				}
-				else
-				{
-					vector<MCParticle *> parents2 = parents.at(j)->getParents();
-					for (int j2 = 0; j2 < parents2.size(); j2++)
-					{
-						if (parents2.at(j2) == pairISR.at(0) || parents2.at(j2) == pairISR.at(1))
-						{
-							ISRstable = 1;
-						}
-						else
-						{
-							vector<MCParticle *> parents3 = parents2.at(j2)->getParents();
-							for (int j3 = 0; j3 < parents3.size(); j3++)
-							{
-								if (parents3.at(j3) == pairISR.at(0) || parents3.at(j3) == pairISR.at(1))
-								{
-									ISRstable = 1;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			if (ISRstable == 0)
-			{
-				stable_stables.push_back(particle);
-				stables.push_back(particle);
-				streamlog_out(DEBUG) << " ----> IS STABLE";
-			}
-
-			if (ISRstable == 1)
-			{
-				isr_stables.push_back(particle);
-				stables.push_back(particle);
-				streamlog_out(DEBUG) << " ----> IS ISR";
-			}
+			stables.push_back(particle);	
 		}
 	}
 
-	/*stables.push_back(stable_stables);
-	stables.push_back(isr_stables);
-	stables.push_back(overlay_stables);*/
+
 	return stables;
 } // GetQQbarStables()
 

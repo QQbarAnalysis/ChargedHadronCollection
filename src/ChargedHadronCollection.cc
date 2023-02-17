@@ -97,7 +97,7 @@ std::vector<MCParticle *> ChargedHadronCollection::GetQQbarStables(EVENT::LCColl
 	if (number < 3)
 		return stables; // return empty
 
-	for (int i = 0 i < number; i++)
+	for (int i = 0; i < number; i++)
 	{
 
 		MCParticle *particle = dynamic_cast<MCParticle *>(myCollection->getElementAt(i));
@@ -116,7 +116,7 @@ std::vector<MCParticle *> ChargedHadronCollection::GetQQbarStables(EVENT::LCColl
 		streamlog_out(DEBUG) << " charge=" << particle->getCharge();
 		if (status==1 && particle->isOverlay() == true)
 		{
-			overlay_stables.push_back(particle);
+			//overlay_stables.push_back(particle);
 			//stables.push_back(particle);
 			streamlog_out(DEBUG) << " ----> IS OVERLAY";
 		}

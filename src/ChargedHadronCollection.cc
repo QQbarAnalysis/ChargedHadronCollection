@@ -35,7 +35,7 @@ ChargedHadronCollection::ChargedHadronCollection() : Processor("ChargedHadronCol
 							_charged_bool,
 							_charged_bool);
 	registerProcessorParameter("momentum_cut",
-							"a cut on the momentum",
+							"a cut on the transversal momentum",
 							_momentum_cut,
 							_momentum_cut);
 	registerProcessorParameter("costheta_cut",
@@ -153,7 +153,7 @@ void ChargedHadronCollection::processEvent(LCEvent *evt)
 			vector<float> direction = MathOperator::getDirection(recoparticle->getMomentum());
 			float angle = fabs(MathOperator::getAngles(direction)[1]);
 			float costheta = std::cos(angle);
-			float mom=MathOperator::getModule(recoparticle->getMomentum());
+			float mom=sqrt(pow(recoparticle->getMomentum()[0],2)+pow(recoparticle->getMomentum()[1],2));
 			if(fabs(costheta)>_costheta_cut) continue;
 			if(mom>_momentum_cut) continue;
 			if (stable_particles.at(i)->getCharge() != 0)

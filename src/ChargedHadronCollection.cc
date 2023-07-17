@@ -35,7 +35,7 @@ ChargedHadronCollection::ChargedHadronCollection() : Processor("ChargedHadronCol
 							_onlycharged_bool,
 							_onlycharged_bool);
 	registerProcessorParameter("momentum_cut",
-							"a cut on the momentum",
+							"a cut on the transversal momentum",
 							_momentum_cut,
 							_momentum_cut);
 	registerProcessorParameter("pt_cut",

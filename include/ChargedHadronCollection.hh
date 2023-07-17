@@ -57,9 +57,10 @@ private:
   EVENT::ReconstructedParticle *getRecoParticle(MCParticle *particle);
   std::vector<EVENT::MCParticle *> GetQQbarStables(EVENT::LCCollection *myCollection);
 
-  int _charged_bool=0;
+  int _onlycharged_bool=0;
   float _momentum_cut=1;
-  float _costheta_cut=0.95;
+  float _pt_cut=0.5;
+  float _costheta_cut=0.99;
   std::string _newMCColName;
   std::string _MCColName;
   std::string _colName;

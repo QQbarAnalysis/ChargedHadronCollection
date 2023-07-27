@@ -117,6 +117,8 @@ std::vector<MCParticle *> ChargedHadronCollection::GetQQbarStables(EVENT::LCColl
       int status= particle->getGeneratorStatus();
       int left= particle->hasLeftDetector();
       if(left==1 && fabs(particle->getPDG())!=13) status=0;// this should exclude neutrinos and HiddenValley particles from the analysis
+      int simstatus=particle->getSimulatorStatus();
+      if(simstatus==0) status=0;
 
       if (status==1 && particle->isOverlay() == false)
       {
